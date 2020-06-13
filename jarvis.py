@@ -4,7 +4,7 @@ import wikipedia
 import datetime #default installed engine
 import webbrowser # default installed engine
 import os
-
+import win32api
 
 
 engine = pyttsx3.init('sapi5')
@@ -21,11 +21,11 @@ def speak(audio):
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
-        speak("Good Morning sunshine!")
+        speak("Good Morning Sir! ")
     else:
-        speak("Welcome Back sunshine!")
+        speak("Welcome back Sir!")
 
-    speak("How may i help you,love!")
+    speak("How may I help you, Sir!")
 
 def takeCommand():#it will take input from user that is microphone
     r = sr.Recognizer()
@@ -37,7 +37,7 @@ def takeCommand():#it will take input from user that is microphone
     try:
         print('Recognizing...')
         query = r.recognize_google(audio, language='en-in')#query is the question we asked
-        print(f"You: {query}\n") #i think this is what we said not sure tho
+        print(query.encode('utf-8')) #i think this is what we said not sure tho
 
     except Exception as e: #we have to create exception also like if u r not connected to internet
         print(e)
@@ -58,7 +58,20 @@ if __name__ == "__main__":
             speak("According to wikipedia")
             print(results)
             speak(results)
-        
+
+        if 'open youtube' in query:
+            webbrowser.open('https:\\www.youtube.com')
+
+        elif 'open google' in query:
+            webbrowser.open('https:\\www.google.com')
+
+        elif 'play music' in query:
+            music_dir = 'C:\Users\jasha\Music\New folder'
+            songs = os.listdir(music_dir)
+            print(songs)
+            os.startfile(os.path.join(music_dir,songs[0]))
+            
+
 
 
     
